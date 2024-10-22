@@ -1,18 +1,11 @@
-name: Testing configuration Variables
-
-on:
-  workflow_dispatch
-
-env:
-  cloud: GCP
-
 jobs:
-  greeting_job:
+  build:
     runs-on: ubuntu-latest
-    env:
-      Greeting: Hello
     steps:
-      - name: "Say Hello to RAJU RAJ"
-        run: echo "$Greeting $First_Name is using $cloud with project ${{ vars.PROJECT_ID }}!"
-        env:
-          First_Name: RAJU
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_MY_SECRET: ${{ secrets.MY_SECRET }}
+          envkey_ANOTHER_SECRET: ${{ secrets.ANOTHER_SECRET }}
